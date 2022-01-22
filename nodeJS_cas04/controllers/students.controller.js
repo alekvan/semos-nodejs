@@ -32,9 +32,7 @@ function addNewStudents(req, res) {
   res.send({
     message:
       "New student with the name of " +
-      req.body.firstName +
-      " " +
-      req.body.lastName +
+      req.body.name +
       " is added to the database.",
     students: students,
   });
