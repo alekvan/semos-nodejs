@@ -20,6 +20,17 @@ const addNewClub = async (req, res) => {
   });
 };
 
+const modifyClubById = async (req, res) => {
+  await Club.findByIdAndUpdate(req.params.id, req.body);
+  const modifiedClub = await Club.findById(req.params.id);
+
+  res.send({
+    error: false,
+    message: `Club with id ${modifiedClub._id} has been updated`,
+    club: modifiedClub,
+  });
+};
+
 const removeClubById = async (req, res) => {
   await Club.findByIdAndDelete(req.params.id);
 
@@ -33,4 +44,5 @@ module.exports = {
   getAllClubs,
   addNewClub,
   removeClubById,
+  modifyClubById,
 };

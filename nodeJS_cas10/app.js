@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const playersRouter = require("./routes/players/player.route");
+const clubsRouter = require("./routes/clubs/club.route");
 
 const app = express();
 mongoose.connect("mongodb://localhost:27017/football-app-db");
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/players", playersRouter);
+app.use("/club", clubsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
