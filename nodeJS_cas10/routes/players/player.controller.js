@@ -15,7 +15,7 @@ const getAllPlayers = async (req, res) => {
     return;
   }
 
-  const players = await Player.find();
+  const players = await Player.find().populate("club", "name");
 
   res.send({
     error: false,
@@ -35,20 +35,33 @@ const addNewPlayer = async (req, res) => {
 };
 
 const removePlayerById = async (req, res) => {
+  const player = await Player.findById(req.params.id);
   await Player.findByIdAndDelete(req.params.id);
 
   res.send({
     error: false,
     message: `Player with id #${req.params.id} has been deleted`,
+    player: player,
   });
 };
 
 const modifyPlayerById = async (req, res) => {
   await Player.findByIdAndUpdate(req.params.id, req.body);
-
+  const player = await Player.findById(req.params.id);
   res.send({
     error: false,
     message: `Player with id #${req.params.id} has been modified`,
+    player: player,
+  });
+};
+
+const getPlayerById = async (req, res) => {
+  const player = await Player.findById(req.params.id);
+
+  res.send({
+    error: false,
+    message: `Player with id ${player._id} has been fetched`,
+    player: player,
   });
 };
 
@@ -57,4 +70,5 @@ module.exports = {
   addNewPlayer,
   removePlayerById,
   modifyPlayerById,
+  getPlayerById,
 };
