@@ -1,11 +1,12 @@
 const express = require("express");
-const clubsRouter = express.Router();
+const router = express.Router();
 const controller = require("./club.controller");
 
-clubsRouter
-  .get("/", controller.getAllClubs)
-  .post("/", controller.addNewClub)
-  .patch("/:id", controller.modifyClubById)
-  .delete("/:id", controller.removeClubById);
+router
+  .get("/", controller.getAll)
+  .get("/create", controller.getAddClub)
+  .post("/", controller.addClub)
+  .patch("/:id", controller.patchClubById)
+  .delete("/:id", controller.deleteClubById);
 
-module.exports = clubsRouter;
+module.exports = router;

@@ -4,24 +4,25 @@ const playerSchema = mongoose.Schema(
   {
     first_name: {
       type: String,
-      required: true,
     },
     last_name: {
       type: String,
-      required: true,
     },
     date_of_birth: {
       type: Date,
-      required: true,
     },
     // Ref from clubs
     club: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Club",
+      type: String,
     },
     position: {
       type: String,
-      required: true,
+    },
+    league: {
+      type: String,
+    },
+    agent: {
+      type: String,
     },
   },
   { timestamps: true }

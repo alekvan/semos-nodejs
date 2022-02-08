@@ -23,6 +23,12 @@ const clubSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "League",
     },
+    players: [
+      {
+        by: mongoose.Schema.Types.ObjectId,
+        body: "string",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -1,40 +1,30 @@
 const Player = require("../../models/player.model");
+const Club = require("../../models/club.model");
 
-const getAllPlayers = async (req, res) => {
-  if (req.query.first_name && req.query.last_name) {
-    const players = await Player.find({
-      first_name: req.query.first_name,
-      last_name: req.query.last_name,
-    });
+const getAll = async (req, res) => {
+  const players = await Player.find();
 
-    res.send({
-      error: false,
-      message: `All players with first name ${req.query.first_name} and last name ${req.query.last_name}`,
-      players: players,
-    });
-    return;
-  }
-
-  const players = await Player.find().populate("club", "name");
-
-  res.send({
-    error: false,
-    message: "All players from the database",
-    players: players,
-  });
+  res.render("players/index", { players });
 };
 
-const addNewPlayer = async (req, res) => {
+const addPlayer = async (req, res) => {
   const players = await Player.create(req.body);
 
-  res.send({
-    error: false,
-    message: "New players has been created",
-    player: players,
+  Club.updateOne(
+    { _id: req.body.club }, // query matching , refId should be "ObjectId" type
+    { $push: { players: players } } //single object will be pushed to players
+  ).exec(function (err) {
+    console.log(err);
   });
+
+  res.redirect("players");
 };
 
-const removePlayerById = async (req, res) => {
+const getAddPlayer = (req, res) => {
+  res.render("players/create", { country });
+};
+
+const deletePlayerById = async (req, res) => {
   const player = await Player.findById(req.params.id);
   await Player.findByIdAndDelete(req.params.id);
 
@@ -45,7 +35,7 @@ const removePlayerById = async (req, res) => {
   });
 };
 
-const modifyPlayerById = async (req, res) => {
+const patchPlayerById = async (req, res) => {
   await Player.findByIdAndUpdate(req.params.id, req.body);
   const player = await Player.findById(req.params.id);
   res.send({
@@ -55,7 +45,7 @@ const modifyPlayerById = async (req, res) => {
   });
 };
 
-const getPlayerById = async (req, res) => {
+const getPlayer = async (req, res) => {
   const player = await Player.findById(req.params.id);
 
   res.send({
@@ -66,9 +56,10 @@ const getPlayerById = async (req, res) => {
 };
 
 module.exports = {
-  getAllPlayers,
-  addNewPlayer,
-  removePlayerById,
-  modifyPlayerById,
-  getPlayerById,
+  getAll,
+  addPlayer,
+  deletePlayerById,
+  patchPlayerById,
+  getPlayer,
+  getAddPlayer,
 };

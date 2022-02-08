@@ -1,19 +1,16 @@
-const Club = require("../../models/club.model");
-const Country = require("../../models/countries.model");
+const Club = require("../../../models/club.model");
 
-const getAll = async (req, res) => {
-  const clubs = await Club.find();
+const getAllClubs = async (req, res) => {
+  const club = await Club.find();
 
-  res.render("clubs/index", { clubs });
+  res.send({
+    error: false,
+    message: "All club from the database",
+    club: club,
+  });
 };
 
-const getAddClub = async (req, res) => {
-  const country = await Country.find();
-
-  res.render("clubs/create", { country });
-};
-
-const addClub = async (req, res) => {
+const addNewClub = async (req, res) => {
   const club = await Club.create(req.body);
 
   res.send({
@@ -23,7 +20,7 @@ const addClub = async (req, res) => {
   });
 };
 
-const patchClubById = async (req, res) => {
+const modifyClubById = async (req, res) => {
   await Club.findByIdAndUpdate(req.params.id, req.body);
   const modifiedClub = await Club.findById(req.params.id);
 
@@ -34,7 +31,7 @@ const patchClubById = async (req, res) => {
   });
 };
 
-const deleteClubById = async (req, res) => {
+const removeClubById = async (req, res) => {
   await Club.findByIdAndDelete(req.params.id);
 
   res.send({
@@ -44,9 +41,8 @@ const deleteClubById = async (req, res) => {
 };
 
 module.exports = {
-  getAll,
-  getAddClub,
-  addClub,
-  deleteClubById,
-  patchClubById,
+  getAllClubs,
+  addNewClub,
+  removeClubById,
+  modifyClubById,
 };

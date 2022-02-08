@@ -3,10 +3,11 @@ const playersRouter = express.Router();
 const controller = require("./player.controller");
 
 playersRouter
-  .get("/", controller.getAllPlayers)
-  .post("/", controller.addNewPlayer)
-  .delete("/:id", controller.removePlayerById)
-  .patch("/:id", controller.modifyPlayerById)
-  .get("/:id", controller.getPlayerById);
+  .get("/", controller.getAll)
+  .get("/create", controller.getAddPlayer)
+  .post("/", controller.addPlayer)
+  .delete("/:id", controller.deletePlayerById)
+  .patch("/:id", controller.patchPlayerById)
+  .get("/:id", controller.getPlayer);
 
 module.exports = playersRouter;
