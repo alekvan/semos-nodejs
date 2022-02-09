@@ -11,8 +11,8 @@ const coachSchema = mongoose.Schema(
       required: true,
     },
     club: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Club",
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

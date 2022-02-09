@@ -6,8 +6,8 @@ playersRouter
   .get("/", controller.getAll)
   .get("/create", controller.getAddPlayer)
   .post("/", controller.addPlayer)
-  .delete("/:id", controller.deletePlayerById)
-  .patch("/:id", controller.patchPlayerById)
+  .get("/:id/delete", controller.deletePlayerById)
+  .post("/:id/update", controller.patchPlayerById)
   .get("/:id", controller.getPlayer);
 
 module.exports = playersRouter;

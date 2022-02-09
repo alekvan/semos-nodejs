@@ -16,12 +16,11 @@ const clubSchema = mongoose.Schema(
     },
     country: {
       type: String,
-      required: true,
     },
     //Ref from league
     league: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "League",
+      type: String,
+      required: true,
     },
     players: [
       {

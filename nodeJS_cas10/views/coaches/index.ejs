@@ -51,13 +51,9 @@
       <thead>
         <tr>
           <th scope="col">#ID</th>
-          <th scope="col">First name</th>
-          <th scope="col">Last name</th>
-          <th scope="col">Date of birth</th>
-          <th scope="col">Club</th>
+          <th scope="col">Name</th>
           <th scope="col">Position</th>
-          <th scope="col">League</th>
-          <th scope="col">Agent</th>
+          <th scope="col">Club</th>
         </tr>
       </thead>
       <tbody>
@@ -66,13 +62,21 @@
           <th scope="row">
             <a href="/coaches/<%= coach._id %>"><%= coach._id %></a>
           </th>
-          <td><%= coach.first_name %></td>
-          <td><%= coach.last_name %></td>
-          <td><%= coach.date_of_birth %></td>
-          <td><%= coach.club %></td>
+          <td><%= coach.name %></td>
           <td><%= coach.position %></td>
-          <td><%= coach.league %></td>
-          <td><%= coach.agent %></td>
+          <td><%= coach.club %></td>
+          <td>
+            <a
+              class="btn btn-raised btn-danger"
+              href="/coaches/<%= coach._id %>"
+              >Delete</a
+            >
+            <a
+              class="btn btn-raised btn-secondary"
+              href="/coaches/<%= coach._id %>/update"
+              >Edit</a
+            >
+          </td>
         </tr>
         <% }) %>
       </tbody>

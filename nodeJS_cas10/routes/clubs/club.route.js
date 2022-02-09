@@ -6,7 +6,8 @@ router
   .get("/", controller.getAll)
   .get("/create", controller.getAddClub)
   .post("/", controller.addClub)
-  .patch("/:id", controller.patchClubById)
-  .delete("/:id", controller.deleteClubById);
+  .get("/:id/update", controller.getPatchClubId)
+  .post("/:id/update", controller.patchClubById)
+  .get("/:id", controller.deleteClubById);
 
 module.exports = router;

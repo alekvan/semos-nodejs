@@ -71,6 +71,16 @@
           <td><%= club.country %></td>
           <td><%= club.league %></td>
           <td><%= club.players %></td>
+          <td>
+            <a class="btn btn-raised btn-danger" href="/clubs/<%= club._id %>"
+              >Delete</a
+            >
+            <a
+              class="btn btn-raised btn-secondary"
+              href="/clubs/<%= club._id %>/update"
+              >Edit</a
+            >
+          </td>
         </tr>
         <% }) %>
       </tbody>

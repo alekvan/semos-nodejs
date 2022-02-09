@@ -10,18 +10,18 @@ const getAll = async (req, res) => {
 const addPlayer = async (req, res) => {
   const players = await Player.create(req.body);
 
-  Club.updateOne(
-    { _id: req.body.club }, // query matching , refId should be "ObjectId" type
-    { $push: { players: players } } //single object will be pushed to players
-  ).exec(function (err) {
-    console.log(err);
-  });
+  // Club.updateOne(
+  //   { _id: req.body.club }, // query matching , refId should be "ObjectId" type
+  //   { $push: { players: players } } //single object will be pushed to players
+  // ).exec(function (err) {
+  //   console.log(err);
+  // });
 
   res.redirect("players");
 };
 
 const getAddPlayer = (req, res) => {
-  res.render("players/create", { country });
+  res.render("players/create");
 };
 
 const deletePlayerById = async (req, res) => {

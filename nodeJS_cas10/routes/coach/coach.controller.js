@@ -1,4 +1,5 @@
 const Coach = require("../../models/coach.model");
+const Country = require("../../models/countries.model");
 
 const getAllCoaches = async (req, res) => {
   const coaches = await Coach.find();
@@ -6,47 +7,52 @@ const getAllCoaches = async (req, res) => {
   res.render("coaches/index", { coaches });
 };
 
-const addCoach = async (req, res) => {
-  const coaches = await Coach.create(req.body);
+const getAddCoach = async (req, res) => {
+  const country = await Country.find();
 
-  res.render("coaches/create");
+  res.render("coaches/create", { country });
+};
+
+const addCoach = async (req, res) => {
+  const coach = await Coach.create(req.body);
+
+  res.redirect("/coaches");
 };
 
 const removeCoachById = async (req, res) => {
-  const player = await Coach.findById(req.params.id);
   await Coach.findByIdAndDelete(req.params.id);
 
-  res.send({
-    error: false,
-    message: `Coach with id #${req.params.id} has been deleted`,
-    player: player,
-  });
+  res.redirect("/coaches");
+};
+
+const getModifyCoach = async (req, res) => {
+  const coach = await Coach.findById(req.params.id);
+  const country = await Country.find();
+  res.render("coaches/edit", { coach, country });
 };
 
 const modifyCoachById = async (req, res) => {
   await Coach.findByIdAndUpdate(req.params.id, req.body);
-  const player = await Coach.findById(req.params.id);
-  res.send({
-    error: false,
-    message: `Coach with id #${req.params.id} has been modified`,
-    player: player,
-  });
+
+  res.redirect("/coaches");
 };
 
 const getCoachById = async (req, res) => {
-  const player = await Coach.findById(req.params.id);
+  const coach = await Coach.findById(req.params.id);
 
   res.send({
     error: false,
-    message: `Coach with id ${player._id} has been fetched`,
-    player: player,
+    message: `Coach with id ${coach._id} has been fetched`,
+    coach: coach,
   });
 };
 
 module.exports = {
   getAllCoaches,
-  // addNewCoach,
+  getAddCoach,
   removeCoachById,
   modifyCoachById,
   getCoachById,
+  getModifyCoach,
+  addCoach,
 };

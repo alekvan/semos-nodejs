@@ -59,6 +59,7 @@
                     name="name"
                     id="name"
                     placeholder="Name"
+                    required
                   />
                 </div>
                 <br />
@@ -69,6 +70,7 @@
                     name="founded"
                     id="founded"
                     placeholder="Founded"
+                    required
                   />
                 </div>
                 <br />
@@ -79,6 +81,7 @@
                     name="city"
                     id="city"
                     placeholder="City"
+                    required
                   />
                 </div>
                 <br />
@@ -89,7 +92,9 @@
                   >
                     <option selected>Choose a country</option>
                     <% for(let i = 0; i < country.length; i++){ %>
-                    <option value="<%= i %>"><%= country[i].name %></option>
+                    <option value="<%= country[i].name %>">
+                      <%= country[i].name %>
+                    </option>
                     <% } %>
                   </select>
                 </div>

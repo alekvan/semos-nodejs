@@ -14,33 +14,27 @@ const getAddClub = async (req, res) => {
 };
 
 const addClub = async (req, res) => {
-  const club = await Club.create(req.body);
+  await Club.create(req.body);
 
-  res.send({
-    error: false,
-    message: "New club has been created",
-    club: club,
-  });
+  res.redirect("/clubs");
+};
+
+const getPatchClubId = async (req, res) => {
+  const clubUpdate = await Club.findById(req.params.id);
+  const country = await Country.find();
+  res.render("clubs/edit", { club: clubUpdate, country });
 };
 
 const patchClubById = async (req, res) => {
   await Club.findByIdAndUpdate(req.params.id, req.body);
-  const modifiedClub = await Club.findById(req.params.id);
 
-  res.send({
-    error: false,
-    message: `Club with id ${modifiedClub._id} has been updated`,
-    club: modifiedClub,
-  });
+  res.redirect("/clubs");
 };
 
 const deleteClubById = async (req, res) => {
   await Club.findByIdAndDelete(req.params.id);
 
-  res.send({
-    error: false,
-    message: `Club with id #${req.params.id} has been deleted`,
-  });
+  res.redirect("/clubs");
 };
 
 module.exports = {
@@ -49,4 +43,5 @@ module.exports = {
   addClub,
   deleteClubById,
   patchClubById,
+  getPatchClubId,
 };

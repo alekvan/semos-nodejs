@@ -4,9 +4,11 @@ const controller = require("./coach.controller");
 
 coachRouter
   .get("/", controller.getAllCoaches)
-  // .post("/", controller.addNewCoach)
-  .delete("/:id", controller.removeCoachById)
-  .patch("/:id", controller.modifyCoachById)
+  .get("/create", controller.getAddCoach)
+  .post("/", controller.addCoach)
+  .get("/:id", controller.removeCoachById)
+  .get("/:id/update", controller.getModifyCoach)
+  .post("/:id/update", controller.modifyCoachById)
   .get("/:id", controller.getCoachById);
 
 module.exports = coachRouter;
