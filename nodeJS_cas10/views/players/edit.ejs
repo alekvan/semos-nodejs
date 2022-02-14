@@ -94,7 +94,7 @@
                 <br />
                 <div class="col-md-6">
                   <select class="form-control" id="club" name="club">
-                    <option value=""><%= player.club %></option>
+                    <option value=""><%= player.club.name %></option>
                     <% clubs.forEach(club => { %>
                     <option value="<%= club._id %>"><%= club.name %></option>
                     <% }) %>
