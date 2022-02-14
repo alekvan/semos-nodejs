@@ -1,8 +1,9 @@
 const Player = require("../../models/player.model");
 const Club = require("../../models/club.model");
+const res = require("express/lib/response");
 
 const getAll = async (req, res) => {
-  const players = await Player.find();
+  const players = await Player.find().populate("club", "name");
 
   res.render("players/index", { players });
 };
@@ -20,8 +21,9 @@ const addPlayer = async (req, res) => {
   res.redirect("players");
 };
 
-const getAddPlayer = (req, res) => {
-  res.render("players/create");
+const getAddPlayer = async (req, res) => {
+  const clubs = await Club.find();
+  res.render("players/create", { clubs });
 };
 
 const deletePlayerById = async (req, res) => {
@@ -33,6 +35,13 @@ const deletePlayerById = async (req, res) => {
     message: `Player with id #${req.params.id} has been deleted`,
     player: player,
   });
+};
+
+const getPatchPlayerById = async (req, res) => {
+  const clubs = await Club.find();
+  const player = await Player.findById(req.params.id).populate("club", "name");
+
+  res.render("players/edit", { player, clubs });
 };
 
 const patchPlayerById = async (req, res) => {
@@ -62,4 +71,5 @@ module.exports = {
   patchPlayerById,
   getPlayer,
   getAddPlayer,
+  getPatchPlayerById,
 };

@@ -48,35 +48,32 @@
       </div>
     </nav>
 
-    <a class="btn btn-primary" href="/coaches/create">Create new coach</a>
+    <a class="btn btn-primary" href="/agents/create">Create new agent</a>
 
     <table class="table mt-5">
       <thead>
         <tr>
           <th scope="col">#ID</th>
           <th scope="col">Name</th>
-          <th scope="col">Position</th>
-          <th scope="col">Club</th>
         </tr>
       </thead>
       <tbody>
-        <% coaches.forEach(coach => { %>
+        <% agents.forEach(agent => { %>
         <tr>
           <th scope="row">
-            <a href="/coaches/<%= coach._id %>"><%= coach._id %></a>
+            <a href="/agents/<%= agent._id %>"><%= agent._id %></a>
           </th>
-          <td><%= coach.name %></td>
-          <td><%= coach.position %></td>
-          <td><%= coach.club %></td>
+          <td><%= agent.name %></td>
           <td>
             <a
-              class="btn btn-raised btn-secondary"
-              href="/coaches/<%= coach._id %>/update"
+              class="btn btn-raised btn-warning"
+              href="/agents/<%= agent._id %>"
               >Edit</a
             >
             <a
               class="btn btn-raised btn-danger"
-              href="/coaches/<%= coach._id %>"
+              href="javascript:;"
+              onclick="deleteAgent('<%= agent._id %>')"
               >Delete</a
             >
           </td>
@@ -90,5 +87,6 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script src="javascripts/script.js"></script>
   </body>
 </html>

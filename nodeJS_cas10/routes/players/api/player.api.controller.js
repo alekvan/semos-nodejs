@@ -42,7 +42,7 @@ const addNewPlayer = async (req, res) => {
   // });
   await Club.updateOne(
     { _id: req.body.club }, // query matching , refId should be "ObjectId" type
-    { $push: { players: players } } //single object will be pushed to attachemnts
+    { $push: { players: players } } //single object will be pushed to players
   )
     .exec(function (err) {
       console.log(err);

@@ -2,15 +2,15 @@ const Club = require("../../models/club.model");
 const Country = require("../../models/countries.model");
 
 const getAll = async (req, res) => {
-  const clubs = await Club.find();
+  const clubs = await Club.find().populate("country", { _id: 0 });
 
   res.render("clubs/index", { clubs });
 };
 
 const getAddClub = async (req, res) => {
-  const country = await Country.find();
+  const countries = await Country.find();
 
-  res.render("clubs/create", { country });
+  res.render("clubs/create", { countries });
 };
 
 const addClub = async (req, res) => {
@@ -20,9 +20,10 @@ const addClub = async (req, res) => {
 };
 
 const getPatchClubId = async (req, res) => {
-  const clubUpdate = await Club.findById(req.params.id);
-  const country = await Country.find();
-  res.render("clubs/edit", { club: clubUpdate, country });
+  const countries = await Country.find();
+  const club = await Club.findById(req.params.id);
+
+  res.render("clubs/edit", { club, countries });
 };
 
 const patchClubById = async (req, res) => {
@@ -34,7 +35,7 @@ const patchClubById = async (req, res) => {
 const deleteClubById = async (req, res) => {
   await Club.findByIdAndDelete(req.params.id);
 
-  res.redirect("/clubs");
+  res.status(200).send({});
 };
 
 module.exports = {

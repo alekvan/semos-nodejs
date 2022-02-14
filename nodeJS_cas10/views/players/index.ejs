@@ -40,6 +40,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/coaches">Coaches</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/agents">Agents</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -61,18 +64,31 @@
         </tr>
       </thead>
       <tbody>
-        <% players.forEach(palyer => { %>
+        <% players.forEach(player => { %>
         <tr>
           <th scope="row">
-            <a href="/players/<%= palyer._id %>"><%= palyer._id %></a>
+            <a href="/players/<%= player._id %>"><%= player._id %></a>
           </th>
-          <td><%= palyer.first_name %></td>
-          <td><%= palyer.last_name %></td>
-          <td><%= palyer.date_of_birth %></td>
-          <td><%= palyer.club %></td>
-          <td><%= palyer.position %></td>
-          <td><%= palyer.league %></td>
-          <td><%= palyer.agent %></td>
+          <td><%= player.first_name %></td>
+          <td><%= player.last_name %></td>
+          <td><%= player.date_of_birth %></td>
+          <td><%= player.club %></td>
+          <td><%= player.position %></td>
+          <td><%= player.league %></td>
+          <td><%= player.agent %></td>
+          <td>
+            <a
+              class="btn btn-raised btn-warning"
+              href="/players/<%= player._id %>"
+              >Edit</a
+            >
+            <a
+              class="btn btn-raised btn-danger"
+              href="javascript:;"
+              onclick="deletePlayer('<%= player._id %>')"
+              >Delete</a
+            >
+          </td>
         </tr>
         <% }) %>
       </tbody>
@@ -83,5 +99,6 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script src="/javascripts/script.js"></script>
   </body>
 </html>

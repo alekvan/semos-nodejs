@@ -93,13 +93,12 @@
                 </div>
                 <br />
                 <div class="col-md-6">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="club"
-                    name="club"
-                    placeholder="Football Club"
-                  />
+                  <select class="form-control" id="club" name="club">
+                    <option value="">Choose a club</option>
+                    <% clubs.forEach(club => { %>
+                    <option value="<%= club._id %>"><%= club.name %></option>
+                    <% }) %>
+                  </select>
                 </div>
                 <br />
                 <div class="col-md-6">

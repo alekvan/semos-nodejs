@@ -51,76 +51,20 @@
             <div class="form-items">
               <h3>Add new club</h3>
               <p>Fill the form below</p>
-              <form action="/clubs/<%= club._id %> " method="post">
+              <form action="/agents" method="post">
                 <div class="col-md-6">
                   <input
                     class="form-control"
                     type="text"
                     name="name"
                     id="name"
-                    value="<%= club.name %>"
+                    value="<%= agents.name %> "
                     required
                   />
                 </div>
-                <br />
-                <div class="col-md-6">
-                  <input
-                    class="form-control"
-                    type="number"
-                    name="founded"
-                    id="founded"
-                    value="<%= club.founded %>"
-                    required
-                  />
-                </div>
-                <br />
-                <div class="col-md-6">
-                  <input
-                    class="form-control"
-                    type="text"
-                    name="city"
-                    id="city"
-                    value="<%= club.city %>"
-                    required
-                  />
-                </div>
-                <br />
-                <div class="col-md-6">
-                  <select class="form-control" id="country" name="country">
-                    <% if (club.country) { %> <% countries.forEach(country => {
-                    %> <% if (country._id.equals(club.country._id)) { %>
-                    <option selected value="<%= country._id %>">
-                      <%= country.name %>
-                    </option>
-                    <% } else { %>
-                    <option value="<%= country._id %>">
-                      <%= country.name %>
-                    </option>
-                    <% } %> <% }) %> <% } else { %>
-                    <option value="">Choose a country</option>
-                    <% countries.forEach(country => { %>
-                    <option value="<%= country._id %>">
-                      <%= country.name %>
-                    </option>
-                    <% }) %> <% } %>
-                  </select>
-                </div>
-
-                <br />
-                <div class="col-md-6">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="league"
-                    name="league"
-                    value="<%= club.league %>"
-                    required
-                  />
-                </div>
-                <br />
-
+                </br>
                 <div class="form-button mt-3">
-                  <button type="submit" class="btn btn-primary">Edit</button>
+                  <button type="submit" class="btn btn-warning">Edit</button>
                 </div>
               </form>
             </div>

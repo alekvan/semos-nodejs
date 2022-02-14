@@ -13,7 +13,8 @@ const playerSchema = mongoose.Schema(
     },
     // Ref from clubs
     club: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref: "Club",
     },
     position: {
       type: String,

@@ -40,6 +40,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/coaches">Coaches</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/agents">Agents</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -72,13 +75,14 @@
           <td><%= club.league %></td>
           <td><%= club.players %></td>
           <td>
-            <a class="btn btn-raised btn-danger" href="/clubs/<%= club._id %>"
-              >Delete</a
+            <a class="btn btn-raised btn-warning" href="/clubs/<%= club._id %>"
+              >Edit</a
             >
             <a
-              class="btn btn-raised btn-secondary"
-              href="/clubs/<%= club._id %>/update"
-              >Edit</a
+              class="btn btn-raised btn-danger"
+              href="javascript:;"
+              onclick="deleteClub('<%= club._id %>')"
+              >Delete</a
             >
           </td>
         </tr>
@@ -91,5 +95,6 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script src="javascripts/script.js"></script>
   </body>
 </html>

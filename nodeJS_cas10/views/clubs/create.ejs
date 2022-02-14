@@ -86,16 +86,13 @@
                 </div>
                 <br />
                 <div class="col-md-6">
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                  >
-                    <option selected>Choose a country</option>
-                    <% for(let i = 0; i < country.length; i++){ %>
-                    <option value="<%= country[i].name %>">
-                      <%= country[i].name %>
+                  <select class="form-control" id="country" name="country">
+                    <option value="">Choose a country</option>
+                    <% countries.forEach(country => { %>
+                    <option value="<%= country._id %>">
+                      <%= country.name %>
                     </option>
-                    <% } %>
+                    <% }) %>
                   </select>
                 </div>
 
