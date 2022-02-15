@@ -23,8 +23,9 @@ function deleteCoach(id) {
     method: "DELETE",
   })
     .then((res) => res.text())
-    .then((res) => {
+    .then((response) => {
       location.reload();
+      console.log(response);
     });
 }
 

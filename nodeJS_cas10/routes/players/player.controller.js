@@ -1,5 +1,6 @@
 const Player = require("../../models/player.model");
 const Club = require("../../models/club.model");
+const Agent = require("../../models/agent.model");
 const res = require("express/lib/response");
 
 const getAll = async (req, res) => {
@@ -11,47 +12,39 @@ const getAll = async (req, res) => {
 const addPlayer = async (req, res) => {
   const players = await Player.create(req.body);
 
-  // Club.updateOne(
-  //   { _id: req.body.club }, // query matching , refId should be "ObjectId" type
-  //   { $push: { players: players } } //single object will be pushed to players
-  // ).exec(function (err) {
-  //   console.log(err);
-  // });
+  if (req.body.agent) {
+    await Agent.findByIdAndUpdate(req.body.agent, {
+      $push: { players: players },
+    });
+  }
 
   res.redirect("players");
 };
 
 const getAddPlayer = async (req, res) => {
   const clubs = await Club.find();
-  res.render("players/create", { clubs });
+  const agents = await Agent.find();
+  res.render("players/create", { clubs, agents });
 };
 
 const deletePlayerById = async (req, res) => {
-  const player = await Player.findById(req.params.id);
   await Player.findByIdAndDelete(req.params.id);
 
-  res.send({
-    error: false,
-    message: `Player with id #${req.params.id} has been deleted`,
-    player: player,
-  });
+  res.end();
 };
 
 const getPatchPlayerById = async (req, res) => {
   const clubs = await Club.find();
+  const agents = await Agent.find();
   const player = await Player.findById(req.params.id).populate("club", "name");
 
-  res.render("players/edit", { player, clubs });
+  res.render("players/edit", { player, clubs, agents });
 };
 
 const patchPlayerById = async (req, res) => {
   await Player.findByIdAndUpdate(req.params.id, req.body);
-  const player = await Player.findById(req.params.id);
-  res.send({
-    error: false,
-    message: `Player with id #${req.params.id} has been modified`,
-    player: player,
-  });
+
+  res.redirect("players");
 };
 
 const getPlayer = async (req, res) => {

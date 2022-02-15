@@ -6,10 +6,10 @@ const agentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    // players: {
-    //   type: mongoose.Types.ObjectId,
-    //   ref: "Player",
-    // },
+    players: {
+      type: mongoose.Types.ObjectId,
+      ref: "Player",
+    },
   },
   { timestamps: true }
 );
