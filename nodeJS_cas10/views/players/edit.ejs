@@ -51,7 +51,7 @@
             <div class="form-items">
               <h3>Add new player</h3>
               <p>Fill the form below</p>
-              <form action="/players" method="post">
+              <form action="/players/<%= player._id %> " method="post">
                 <div class="col-md-6">
                   <input
                     class="form-control"
@@ -112,13 +112,12 @@
                 </div>
                 <br />
                 <div class="col-md-6">
-                  <input
-                    class="form-control"
-                    type="text"
-                    name="agent"
-                    id="agent"
-                    value="<%= player.agent %>"
-                  />
+                  <select class="form-control" id="agent" name="agent">
+                    <option value=""><%= player.agent.name %></option>
+                    <% agents.forEach(agent => { %>
+                    <option value="<%= agent._id %>"><%= agent.name %></option>
+                    <% }) %>
+                  </select>
                 </div>
 
                 <div class="form-button mt-3">

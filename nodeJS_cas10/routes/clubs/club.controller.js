@@ -1,10 +1,11 @@
 const Club = require("../../models/club.model");
 const Country = require("../../models/countries.model");
+const Player = require("../../models/player.model");
 
 const getAll = async (req, res) => {
-  const clubs = await Club.find().populate("country", { _id: 0 });
-
-  res.render("clubs/index", { clubs });
+  const clubs = await Club.find().populate("country");
+  const players = await Player.find();
+  res.render("clubs/index", { clubs, players });
 };
 
 const getAddClub = async (req, res) => {

@@ -15,7 +15,7 @@ const clubSchema = mongoose.Schema(
       required: true,
     },
     country: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Country",
     },
     //Ref from league
@@ -25,8 +25,8 @@ const clubSchema = mongoose.Schema(
     },
     players: [
       {
-        by: mongoose.Schema.Types.ObjectId,
-        body: "string",
+        type: mongoose.Types.ObjectId,
+        ref: "Player",
       },
     ],
   },

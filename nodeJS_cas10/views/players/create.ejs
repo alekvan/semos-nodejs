@@ -117,14 +117,12 @@
                 </div>
                 <br />
                 <div class="col-md-6">
-                  <input
-                    class="form-control"
-                    type="text"
-                    name="agent"
-                    id="agent"
-                    placeholder="Agent"
-                    required
-                  />
+                  <select class="form-control" id="agent" name="agent">
+                    <option value="">Choose a agent</option>
+                    <% agents.forEach(agent => { %>
+                    <option value="<%= agent._id %>"><%= agent.name %></option>
+                    <% }) %>
+                  </select>
                 </div>
 
                 <div class="form-button mt-3">

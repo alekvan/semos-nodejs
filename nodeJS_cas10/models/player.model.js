@@ -23,7 +23,8 @@ const playerSchema = mongoose.Schema(
       type: String,
     },
     agent: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref: "Agent",
     },
   },
   { timestamps: true }
