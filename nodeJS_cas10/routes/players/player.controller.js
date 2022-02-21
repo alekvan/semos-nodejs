@@ -5,7 +5,8 @@ const ejs = require("ejs");
 const Player = require("../../models/player.model");
 const Club = require("../../models/club.model");
 const Agent = require("../../models/agent.model");
-
+const mongoose = require("mongoose");
+const ObjectId = require("mongoose").Types.ObjectId;
 const getAll = async (req, res) => {
   const players = await Player.find()
     .populate("club", "name")
@@ -27,7 +28,8 @@ const addPlayer = async (req, res) => {
       $push: { players: player },
     });
   }
-
+  console.log(req.body.club);
+  console.log(player._id);
   res.redirect("players");
 };
 
@@ -54,79 +56,67 @@ const getPatchPlayerById = async (req, res) => {
 };
 
 const patchPlayerById = async (req, res) => {
-  if (req.body.club == "") {
-    req.body.club = null;
-  }
+  console.log("1");
+  const player = await Player.findById(req.params.id);
+  const updatedPlayer = await Player.findByIdAndUpdate(req.params.id, req.body);
+  await Club.updateOne(await Club.findById(player.club), {
+    $pull: { players: player._id },
+  });
+  await Club.findByIdAndUpdate(req.body.club, {
+    $push: { players: updatedPlayer },
+  });
 
-  let originalPlayer = await Player.findById(req.params.id);
-  let player = await Player.findByIdAndUpdate(req.params.id, req.body);
-  console.log("original player club", originalPlayer.club);
-  try {
-    await Club.updateOne(
-      { _id: { $eq: originalPlayer.club } },
-      {
-        $pull: {
-          players: {
-            _id: { $eq: originalPlayer._id },
-          },
-        },
-      }
-    );
+  await Agent.updateOne(await Club.findById(player.agent), {
+    $pull: { players: player._id },
+  });
+  await Agent.findByIdAndUpdate(req.body.agent, {
+    $push: { players: updatedPlayer },
+  });
 
-    console.log("updated");
-  } catch (e) {
-    console.log("error", e);
-  }
-
-  if (req.body.club) {
-    let foundPlayers = await Club.find({ players: player });
-
-    if (foundPlayers.length == 0) {
-      await Club.findByIdAndUpdate(req.body.club, {
-        $push: { players: player },
-      });
-      return;
-    }
-  }
-
-  // if (req.body.club) {
-  //   let foundPlayers = await Club.find({ players: player });
-  //   let originalClub = await Club.find({ players: originalPlayer });
-  //   let foundPlayersAgent = await Agent.find({ players: player });
-  //   let userId = mongoose.Types.ObjectID(req.params.id);
-  //   if (foundPlayers.length == 0) {
-  //     await Club.findByIdAndUpdate(req.body.club, {
-  //       $push: { players: player },
-  //     });
-  //   } else {
-  //     await Club.findByIdUpdate(originalClub._id, {
-  //       $pull: { players: { _id: player._id } },
-  //     });
-  //     //TODO: await Club.findByIdAndUpdate(req.body.club, $push:{},});
+  /*const player = await Player.findById(req.params.id)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  console.log("2");
+  console.log(player.club);
+*/
+  // var result = await Club.findOneAndUpdate(
+  //   mongoose.Types.ObjectId("6212282ddede6af007cfcc45"),
+  //   {
+  //     $pull: {
+  //       players: {
+  //         _id: new mongoose.Types.ObjectId("6212a4c55b18873cf2a6e23e"),
+  //       },
+  //     },
+  //   },
+  //   { safe: true },
+  //   function (err, doc) {
+  //     if (err) {
+  //       console.log("error: ");
+  //       console.log(err);
+  //     } else {
+  //       //do stuff
+  //       console.log(doc);
+  //     }
   //   }
-  //   if (foundPlayersAgent.length == 0) {
-  //     await Agent.findByIdAndUpdate(req.body.club, {
-  //       $push: { players: player },
-  //     });
-  //     // } else {
-  //     //   await Agent.findByIdAndUpdate(req.body.club, {
-  //     //     $pull: { players: player },
-  //     //   });
-  //   }
-  // }
+  // ).clone();
+  // console.log("3");
 
+  // //62129736b2b258b7f709613f  <<player
+  // //6212282ddede6af007cfcc45 << club
+  // /*
+  // 6212a4c55b18873cf2a6e23e
+  //  */
+  // console.log(result);
+  // console.debug(result);
+  // const updatedPlayer = await Player.findByIdAndUpdate(req.params.id, req.body);
+  // console.log("4");
   res.redirect("/players");
 };
 
-// const getPlayer = async (req, res) => {
-//   const player = await Player.findById(req.params.id);
-
-//   res.send({
-//     error: false,
-//     message: `Player with id ${player._id} has been fetched`,
-//     player: player,
-//   });
-// };
 const getPdfView = async (req, res) => {
   const player = await Player.findById(req.params.id)
     .populate("club", "name")

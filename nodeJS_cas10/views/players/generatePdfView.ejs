@@ -10,41 +10,18 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Player ID</title>
   </head>
   <body>
     <div class="container-fluid">
       <h1 style="padding-bottom: 30px">Player ID#<%= player._id %></h1>
-      <a href="/players/<%= player._id %>/print ">
-        <button
-          style="
-            background: #379393;
-            border-radius: 11px;
-            padding: 10px 20px;
-            color: #ffffff;
-            display: inline-block;
-            font: normal bold 26px/1 Open Sans, sans-serif;
-            text-align: center;
-          "
-        >
-          Generate PDF
-        </button>
-      </a>
-      <a href="/players/<%= player._id %>/download ">
-        <button
-          style="
-            background: #379393;
-            border-radius: 11px;
-            padding: 10px 20px;
-            color: #ffffff;
-            display: inline-block;
-            font: normal bold 26px/1 Open Sans, sans-serif;
-            text-align: center;
-          "
-        >
-          Download PDF
-        </button>
-      </a>
+      <a href="/players/<%= player._id %>/print" class="myButton"
+        >Generate PDF</a
+      >
+      <a href="/players/<%= player._id %>/download" class="myButton"
+        >Download PDF</a
+      >
 
       <table class="table">
         <thead>
