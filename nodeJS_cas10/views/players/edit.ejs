@@ -102,16 +102,6 @@
                 </div>
                 <br />
                 <div class="col-md-6">
-                  <input
-                    class="form-control"
-                    type="text"
-                    name="league"
-                    id="league"
-                    value="<%= player.league %>"
-                  />
-                </div>
-                <br />
-                <div class="col-md-6">
                   <select class="form-control" id="agent" name="agent">
                     <option value=""><%= player.agent.name %></option>
                     <% agents.forEach(agent => { %>

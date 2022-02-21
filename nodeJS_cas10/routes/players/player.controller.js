@@ -40,6 +40,13 @@ const getAddPlayer = async (req, res) => {
 };
 
 const deletePlayerById = async (req, res) => {
+  const player = await Player.findById(req.params.id);
+  await Club.updateOne(await Club.findById(player.club), {
+    $pull: { players: player._id },
+  });
+  await Agent.updateOne(await Agent.findById(player.agent), {
+    $pull: { players: player._id },
+  });
   await Player.findByIdAndDelete(req.params.id);
 
   res.send({});
@@ -56,64 +63,47 @@ const getPatchPlayerById = async (req, res) => {
 };
 
 const patchPlayerById = async (req, res) => {
-  console.log("1");
   const player = await Player.findById(req.params.id);
   const updatedPlayer = await Player.findByIdAndUpdate(req.params.id, req.body);
-  await Club.updateOne(await Club.findById(player.club), {
-    $pull: { players: player._id },
-  });
-  await Club.findByIdAndUpdate(req.body.club, {
-    $push: { players: updatedPlayer },
-  });
+  if (req.body.club == "") {
+    req.body.club = null;
+  }
 
-  await Agent.updateOne(await Club.findById(player.agent), {
-    $pull: { players: player._id },
-  });
-  await Agent.findByIdAndUpdate(req.body.agent, {
-    $push: { players: updatedPlayer },
-  });
+  if (req.body.club) {
+    let listOfClubs = await Club.find({ players: player });
+    if (listOfClubs.length == 0) {
+      await Club.findByIdAndUpdate(req.body.club, {
+        $push: { players: player },
+      });
+    } else {
+      await Club.updateOne(await Club.findById(player.club), {
+        $pull: { players: player._id },
+      });
+      await Club.findByIdAndUpdate(req.body.club, {
+        $push: { players: updatedPlayer },
+      });
+    }
+  }
 
-  /*const player = await Player.findById(req.params.id)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  console.log("2");
-  console.log(player.club);
-*/
-  // var result = await Club.findOneAndUpdate(
-  //   mongoose.Types.ObjectId("6212282ddede6af007cfcc45"),
-  //   {
-  //     $pull: {
-  //       players: {
-  //         _id: new mongoose.Types.ObjectId("6212a4c55b18873cf2a6e23e"),
-  //       },
-  //     },
-  //   },
-  //   { safe: true },
-  //   function (err, doc) {
-  //     if (err) {
-  //       console.log("error: ");
-  //       console.log(err);
-  //     } else {
-  //       //do stuff
-  //       console.log(doc);
-  //     }
-  //   }
-  // ).clone();
-  // console.log("3");
+  if (req.body.agent == "") {
+    req.body.agent = null;
+  }
 
-  // //62129736b2b258b7f709613f  <<player
-  // //6212282ddede6af007cfcc45 << club
-  // /*
-  // 6212a4c55b18873cf2a6e23e
-  //  */
-  // console.log(result);
-  // console.debug(result);
-  // const updatedPlayer = await Player.findByIdAndUpdate(req.params.id, req.body);
-  // console.log("4");
+  if (req.body.agent) {
+    let listOfAgents = await Agent.find({ players: player });
+    if (listOfAgents.length == 0) {
+      await Agent.findByIdAndUpdate(req.body.agent, {
+        $push: { players: player },
+      });
+    } else {
+      await Agent.updateOne(await Agent.findById(player.agent), {
+        $pull: { players: player._id },
+      });
+      await Agent.findByIdAndUpdate(req.body.agent, {
+        $push: { players: updatedPlayer },
+      });
+    }
+  }
   res.redirect("/players");
 };
 

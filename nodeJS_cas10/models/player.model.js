@@ -19,9 +19,6 @@ const playerSchema = mongoose.Schema(
     position: {
       type: String,
     },
-    league: {
-      type: String,
-    },
     agent: {
       type: mongoose.Types.ObjectId,
       ref: "Agent",

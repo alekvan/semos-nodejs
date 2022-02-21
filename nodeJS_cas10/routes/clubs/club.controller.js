@@ -39,6 +39,14 @@ const deleteClubById = async (req, res) => {
   res.status(200).send({});
 };
 
+const getPdfView = async (req, res) => {
+  const club = await Club.findById(req.params.id)
+    .populate("players")
+    .populate("players.agent", "name");
+  console.log(club.players.first_name);
+  res.render("clubs/generatePdfView", { club });
+};
+
 module.exports = {
   getAll,
   getAddClub,
@@ -46,4 +54,5 @@ module.exports = {
   deleteClubById,
   patchClubById,
   getPatchClubId,
+  getPdfView,
 };
