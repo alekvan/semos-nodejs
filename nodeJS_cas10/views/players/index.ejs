@@ -60,6 +60,7 @@
           <th scope="col">Club</th>
           <th scope="col">Position</th>
           <th scope="col">Agent</th>
+          <th scope="col">Email</th>
         </tr>
       </thead>
       <tbody>
@@ -74,6 +75,9 @@
           <td><%= player.club.name %></td>
           <td><%= player.position %></td>
           <td><%= player.agent.name %></td>
+          <td>
+            <a href="/players/<%= player._id %>/email"><%= player.email %></a>
+          </td>
           <td>
             <a
               class="btn btn-raised btn-warning"

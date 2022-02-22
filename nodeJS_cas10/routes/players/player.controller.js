@@ -2,11 +2,12 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 const ejs = require("ejs");
+const nodemailer = require("nodemailer");
 const Player = require("../../models/player.model");
 const Club = require("../../models/club.model");
 const Agent = require("../../models/agent.model");
-const mongoose = require("mongoose");
-const ObjectId = require("mongoose").Types.ObjectId;
+const { json } = require("express/lib/response");
+
 const getAll = async (req, res) => {
   const players = await Player.find()
     .populate("club", "name")
@@ -178,19 +179,39 @@ const generatePdf = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-
-  // const stream = await fs.readStream("./");
-  // var filename = "myPdf.pdf";
-  // // Be careful of special characters
-
-  // filename = encodeURIComponent(filename);
-  // // Ideally this should strip them
-
-  // res.setHeader("Content-disposition", 'inline; filename="' + filename + '"');
-  // res.setHeader("Content-type", "application/pdf");
-
-  // stream.pipe(res);
 };
+
+const writeEmail = async (req, res) => {
+  const player = await Player.findById(req.params.id);
+  res.render("players/writeEmail", { player });
+};
+
+const sendMail = async (req, res) => {
+  const player = await Player.findById(req.params.id);
+  console.log(req.body);
+  const { email, subject, emailContent } = req.body;
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "idell.okuneva71@ethereal.email", // generated ethereal user
+      pass: "hyQ8S9AsCMwdfjbZ7j", // generated ethereal password
+    },
+  });
+
+  // send mail with defined transport object
+  await transporter.sendMail({
+    from: `"Aleksandar Vangelo" ${email}`, // sender address
+    to: `${player.email}`, // list of receivers
+    subject: subject, // Subject line
+    text: `${emailContent}`, // plain text body
+  });
+
+  res.redirect("/players");
+};
+
 module.exports = {
   getAll,
   addPlayer,
@@ -201,5 +222,7 @@ module.exports = {
   getDownloadPdf,
   // getPlayer,
   getAddPlayer,
+  writeEmail,
+  sendMail,
   getPatchPlayerById,
 };

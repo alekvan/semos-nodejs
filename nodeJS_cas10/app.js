@@ -4,6 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const ejs = require("ejs");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
@@ -17,12 +18,14 @@ const coachRouter = require("./routes/coach/coach.route");
 const agentsRouter = require("./routes/agent/agent.router");
 
 const app = express();
+
 mongoose.connect("mongodb://localhost:27017/football-app-db");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(bodyParser.json());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

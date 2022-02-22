@@ -23,6 +23,9 @@ const playerSchema = mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Agent",
     },
+    email: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
