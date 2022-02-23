@@ -4,7 +4,7 @@ const controller = require("../../controllers/post.controller");
 
 postRouter
   .get("/", controller.allPosts)
-  .post("/create", controller.createPost)
+  .post("/", controller.createPost)
   .get("/:id", controller.getPostById)
   .post("/:id", controller.updatePost)
   .delete("/:id", controller.deletePost);
