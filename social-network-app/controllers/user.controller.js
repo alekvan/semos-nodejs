@@ -13,7 +13,14 @@ const createUser = async (req, res) => {
   res.send({ message: "User created" });
 };
 
+const deleteUser = async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
+
+  res.send(`User with ID#${req.params.id} has been deleted!`);
+};
+
 module.exports = {
   allUsers,
   createUser,
+  deleteUser,
 };
